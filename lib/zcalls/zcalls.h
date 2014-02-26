@@ -39,6 +39,11 @@ struct NvramLoader;
 *@return 1 if zrt init OK*/
 int is_zrt_ready();
 
+/*these functions implemented just in zrt, entry points leading into zrt*/
+int zrt_zcall_prolog_pread(int fd, void *buf, size_t count, off_t offset, size_t *nread);
+int zrt_zcall_prolog_pwrite(int fd, const void *buf, size_t count, off_t offset,
+			    size_t *nwrote);
+
 /******************* zcalls_init_t functions **************/
 void zrt_zcall_prolog_init(void);
 /* irt basic *************************/
@@ -54,9 +59,6 @@ int zrt_zcall_prolog_dup(int fd);
 int zrt_zcall_prolog_dup2(int fd, int newfd);
 int zrt_zcall_prolog_read(int fd, void *buf, size_t count, size_t *nread);
 int zrt_zcall_prolog_write(int fd, const void *buf, size_t count, size_t *nwrote);
-int zrt_zcall_prolog_pread(int fd, void *buf, size_t count, off_t offset, size_t *nread);
-int zrt_zcall_prolog_pwrite(int fd, const void *buf, size_t count, off_t offset,
-			    size_t *nwrote);
 int zrt_zcall_prolog_seek(int fd, off_t offset, int whence, off_t *new_offset);
 int zrt_zcall_prolog_fstat(int fd, struct stat *);
 int zrt_zcall_prolog_getdents(int fd, struct dirent *, size_t count, size_t *nread);
