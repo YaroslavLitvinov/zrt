@@ -21,6 +21,8 @@
  * It's needed while building ZLIBC to cut off the rest of ZRT library code.
  * For generic ZRT using it is should no be defined;*/
 
+#include <sys/types.h>
+
 #ifndef ZLIBC_STUB
 #  include "zrt.h"
 #  include "zcalls.h"
@@ -115,7 +117,8 @@ extern int __nacl_irt_pread(int fd, void *buf, int count, long long offset,
 #ifdef ZLIBC_STUB
     return -1;
 #else
-    return zrt_zcall_prolog_pread(fd, buf, count, offset, nread);
+    size_t* nread_ = (size_t*)nread;
+    return zrt_zcall_prolog_pread(fd, buf, count, offset, nread_);
 #endif //ZLIBC_STUB
 }
 
@@ -124,7 +127,8 @@ extern int __nacl_irt_pwrite(int fd, const void *buf, int count, long long offse
 #ifdef ZLIBC_STUB
     return -1;
 #else
-    return zrt_zcall_prolog_pwrite(fd, buf, count, offset, nwrote);
+    size_t* nwrote_ = (size_t*)nwrote;
+    return zrt_zcall_prolog_pwrite(fd, buf, count, offset, nwrote_);
 #endif //ZLIBC_STUB
 }
 
